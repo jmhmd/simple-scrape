@@ -23,6 +23,8 @@ file.on('end', function(){
 var i = 1
 var getLicense = function(npi, callback){
     
+    if (!npi){ callback(null, []) }
+    
     var url = 'http://www.hipaaspace.com/Medical_Billing/Coding/National_Provider_Identifier/Codes/NPI_' + npi + '.txt'
     
     request.get(url, function(err, res, body){
@@ -48,12 +50,12 @@ var getLicense = function(npi, callback){
 
 function getLicenses(){
     
-    // Slice of only first 10 for testing purposes
-    //npis = npis.slice(0, 10)
+    // Slice of only first n for testing purposes
+    //npis = npis.slice(0, 1000)
     
     async.mapLimit(npis, 20, getLicense, function(err, results){
         
-        if (err){ new Error(err) }
+        if (err){ console.log(err) }
         
         results.unshift(['NPI', 'License Number', 'License State'])
         
