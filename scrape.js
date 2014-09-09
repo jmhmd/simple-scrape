@@ -1,10 +1,10 @@
-var fs = require('fs')
+var fs = require('fs') // node standard library
 //var through = require('through')
-var split = require('split')
-var request = require('request')
-var cheerio = require('cheerio')
-var async = require('async')
-var csv = require('fast-csv')
+var split = require('split') // https://github.com/dominictarr/split
+var request = require('request') // https://github.com/mikeal/request
+var cheerio = require('cheerio') // https://github.com/cheeriojs/cheerio
+var async = require('async') // https://github.com/caolan/async
+var csv = require('fast-csv') // https://github.com/C2FO/fast-csv
 
 var npis = []
 
@@ -20,7 +20,9 @@ file.on('end', function(){
     getLicenses()
 })
 
+// just to keep track via logging while script is working
 var i = 1
+
 var getLicense = function(npi, callback){
     
     if (!npi){ callback(null, []) }
@@ -29,6 +31,7 @@ var getLicense = function(npi, callback){
     
     request.get(url, function(err, res, body){
         
+        // log to keep track of progress
         console.log('Parsing NPI number', i)
         i++
         
